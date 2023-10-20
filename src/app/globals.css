@@ -1,0 +1,12 @@
+
+body{
+  min-height: 100vh;
+}
+a {
+  text-decoration: none;
+}
+
+.link-header{
+  color:white;
+  font-weight: 600;
+}
