@@ -19,6 +19,8 @@ import { useRouter } from "next/navigation";
 import { ICategory } from "../redux/category/categoryInterface";
 import { IMenu } from "../redux/menu/menuInterface";
 import { getMenuThunk, getMenusThunk, updateMenuThunk } from "../redux/menu/menuAction";
+import useAdminCheck from "../hooks/useAdminCheck";
+import { usePathname } from "next/navigation";
 
 const Container = styled("div")({
   position: "relative",
@@ -34,8 +36,15 @@ interface AdminUpdateMenuProps {
   id: string;
 }
 export default function AdminUpdateMenu({ id }: AdminUpdateMenuProps) {
+  const result = useAppSelector((state) => state.auth);
+  const { dataAuth, error } = result;
+  const pathname = usePathname()
+  useAdminCheck(pathname)
+
   const dispatch = useAppDispatch()
   const router = useRouter()
+  
+  
 
   const [name, setName] = useState("");
   const [level, setLevel] = useState(0);

@@ -18,6 +18,9 @@ import { useAppDispatch, useAppSelector } from "@/app/redux/store";
 import { createFilmThunk } from "../redux/film/filmAction";
 import { getCategoriesThunk } from "../redux/category/categoryAction";
 import { ICategory } from "../redux/category/categoryInterface";
+import useAdminCheck from "../hooks/useAdminCheck";
+import { usePathname } from 'next/navigation'
+
 
 const Container = styled("div")({
   position: "relative",
@@ -29,6 +32,9 @@ const Container = styled("div")({
 });
 
 export default function AdminCreateFilm() {
+ const pathname = usePathname()
+  useAdminCheck(pathname)
+
   const [filmName, setFilmName] = useState("");
   const [director, setDirector] = useState("");
   const [image, setImage] = useState<File | null>(null);

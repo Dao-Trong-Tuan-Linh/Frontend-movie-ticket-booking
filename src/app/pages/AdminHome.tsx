@@ -8,23 +8,20 @@ import { FaFilm } from "react-icons/fa";
 import { CiBoxList } from "react-icons/ci";
 import { IoMdAdd } from "react-icons/io";
 import { MdMenu } from "react-icons/md";
+import { RiSlideshow2Line } from "react-icons/ri";
+import useAdminCheck from "../hooks/useAdminCheck";
+import { usePathname } from 'next/navigation'
 
 
-const menusAdmin = [
-  
-]
 export default function AdminHome() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const result = useAppSelector((state) => state.auth);
   const { dataAuth, error } = result;
 
-  useEffect(() => {
-    if (!dataAuth.token || dataAuth.user?.role != 1) {
-      router.push("/admin/login");
-    }
-  }, [dataAuth]);
-
+  const pathname = usePathname()
+  useAdminCheck(pathname)
+  
   const menusAdmin = useMemo(() => [
     {
       name:'Menu',
@@ -45,6 +42,11 @@ export default function AdminHome() {
       name:'Thêm phim',
       link:'/admin/create-film',
       icon:<IoMdAdd/>
+    },
+    {
+      name:'Lịch chiếu',
+      link:'/admin/showtimes',
+      icon:<RiSlideshow2Line/>
     }
   ],[])
 

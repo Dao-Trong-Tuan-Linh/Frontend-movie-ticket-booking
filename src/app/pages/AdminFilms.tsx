@@ -9,6 +9,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { resetFilmDetail } from "../redux/film/filmSlice";
 import DeleteItem from "../components/delete-item/DeleteItem";
+import useAdminCheck from "../hooks/useAdminCheck";
+import { usePathname } from 'next/navigation'
 
 
 const Container = styled("div")({
@@ -23,6 +25,9 @@ const Container = styled("div")({
 });
 
 export default function AdminFilms() {
+  const pathname = usePathname()
+  useAdminCheck(pathname)
+  
   const [open,setOpen] = useState(false)
 
   const handleOpen = async (_id:string) => {
@@ -41,6 +46,8 @@ export default function AdminFilms() {
   }
 
   const dispatch = useAppDispatch();
+
+  
   const resultFilms = useAppSelector((state) => state.film);
   const { dataFilm } = resultFilms;
   const { allFilms } = dataFilm;

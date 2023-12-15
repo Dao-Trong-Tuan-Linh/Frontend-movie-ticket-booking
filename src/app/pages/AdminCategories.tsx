@@ -11,9 +11,12 @@ import { CategoryParams } from "../redux/category/categoryInterface";
 import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DeleteItem from "../components/delete-item/DeleteItem";
-
+import useAdminCheck from "../hooks/useAdminCheck";
+import { usePathname } from 'next/navigation'
 
 export default function AdminCategories() {
+  const pathname = usePathname()
+  useAdminCheck(pathname)
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
 

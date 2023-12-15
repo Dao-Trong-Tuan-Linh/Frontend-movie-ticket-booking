@@ -20,6 +20,8 @@ import { getCategoriesThunk } from "../redux/category/categoryAction";
 import { ICategory } from "../redux/category/categoryInterface";
 import { useRouter } from "next/navigation";
 import { resetFilmDetail } from "../redux/film/filmSlice";
+import useAdminCheck from "../hooks/useAdminCheck";
+import { usePathname } from 'next/navigation'
 
 
 const Container = styled("div")({
@@ -37,6 +39,9 @@ interface AdminFilmProps {
 }
 
 export default function AdminFilm({ id }: AdminFilmProps) {
+  const pathname = usePathname()
+  useAdminCheck(pathname)
+
   const [filmName, setFilmName] = useState("");
   const [director, setDirector] = useState("");
   const [actors, setActors] = useState("");

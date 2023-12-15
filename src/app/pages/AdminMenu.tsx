@@ -7,8 +7,16 @@ import "react-toastify/dist/ReactToastify.css";
 import DeleteItem from "../components/delete-item/DeleteItem";
 import { getMenusThunk } from "../redux/menu/menuAction";
 import MenuTable from "../components/menu-table/MenuTable";
+import useAdminCheck from "../hooks/useAdminCheck";
+import { usePathname } from "next/navigation";
+
 
 export default function AdminMenu() {
+  const result = useAppSelector((state) => state.auth);
+  const { dataAuth, error } = result;
+  const pathname = usePathname()
+  useAdminCheck(pathname)
+
   const dispatch = useAppDispatch()
   const resultMenu = useAppSelector((state) => state.menu)
   const {dataMenu} = resultMenu
