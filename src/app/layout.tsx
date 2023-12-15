@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import ThemeRegistry from "./theme/ThemeRegistry";
 import Header from "./layout/header/Header";
 import ReduxProvider from "./ReduxProvider";
+import DateProvider from "./DateProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ReduxProvider>
           <Header />
-          <ThemeRegistry>{children}</ThemeRegistry>
+          <ThemeRegistry>
+            <DateProvider>{children}</DateProvider>
+          </ThemeRegistry>
         </ReduxProvider>
       </body>
     </html>

@@ -1,12 +1,35 @@
 
 body{
+  min-width: 1200px;
   min-height: 100vh;
+  background-color: #1e1f1e;
 }
 a {
   text-decoration: none;
 }
 
+.logo {
+  font-size: 32px;
+  color:#cd8c3c;
+  font-weight: 600;
+}
+
 .link-header{
   color:white;
   font-weight: 600;
+  text-transform: uppercase;
 }
+
+.link-header:hover,.link-user:hover{
+  color:#cd8c3c;
+}
+
+.link-user {
+  color:white;
+  text-transform: uppercase;
+}
+
+.gap-10 {
+  gap:10px;
+}
+

@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 const initialAuthState: AuthState = {
   loading: false,
   error: "",
-  data: {},
+  dataAuth: {},
 };
 
 export const authSlice = createSlice({
@@ -20,28 +20,27 @@ export const authSlice = createSlice({
   initialState: initialAuthState,
   reducers: {
     logOut: (state) => {
-      state.data = {};
+      state.dataAuth = {};
       removeLocalToken();
       removeLocalUser();
     },
     resetUser: (state) => {
       if (getLocalToken() && getLocalUser()) {
-        const token = JSON.parse(getLocalToken() ?? "");
-        const user = JSON.parse(getLocalUser() ?? "");
-        state.data.token = token;
-        state.data.user = user;
+        const token = JSON.parse(getLocalToken() ?? "") 
+        const user = JSON.parse( getLocalUser() ?? "");
+        state.dataAuth.token = token;
+        state.dataAuth.user = user;
       }
     },
   },
   extraReducers: (builder) => {
     builder.addCase(registerThunk.pending, (state) => {
       state.loading = true;
-      state.data = {};
+      state.dataAuth = {};
     });
     builder.addCase(registerThunk.fulfilled, (state, action) => {
-      console.log("user:", action.payload);
-      state.loading = false;
-      state.data.user = action.payload;
+      state.loading = false
+      toast.success(action.payload)
     });
     builder.addCase(
       registerThunk.rejected,
@@ -55,7 +54,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(loginThunk.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      state.dataAuth = action.payload;
     });
     builder.addCase(
       loginThunk.rejected,

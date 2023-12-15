@@ -12,12 +12,10 @@ export interface LoginParams {
 
 interface IUser {
     name?:string,
-    email?:string
+    role?:number
 }
 
-interface DataUser {
-    user:IUser
-}
+
 export interface IAuth {
     user?:IUser,
     token?:string
@@ -26,13 +24,13 @@ export interface IAuth {
 export interface AuthState {
     loading:boolean,
     error:string,
-    data:IAuth
+    dataAuth:IAuth
 }
 
 export interface IRegister {
    user:{
     name:string,
-    email:string
+    role:number
    }
 }
 

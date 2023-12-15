@@ -12,7 +12,11 @@ baseAxios.interceptors.request.use(async (config: any) => {
   let headerAuth: any = "";
   if (getLocalToken() !== null) {
     const token = getLocalToken();
-    headerAuth = token;
+    if(token) {
+      const tokenWithoutQuotes = token.replace(/"/g, '');
+      headerAuth = tokenWithoutQuotes;
+    }
+   
   }
   config.headers.Authorization = `Bearer ${headerAuth}`;
 

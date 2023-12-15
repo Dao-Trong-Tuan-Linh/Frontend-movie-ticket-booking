@@ -8,7 +8,6 @@ export const registerThunk = createAsyncThunk(
     async (params:RegisterParams,thunkApi) => {
         try {
             const {data} = await baseAxios.post('/register',params);
-            console.log("data:",data)
             const {result} = data;
             setLocalUser(JSON.stringify(result));
             return result;

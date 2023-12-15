@@ -2,10 +2,16 @@ import {configureStore} from "@reduxjs/toolkit"
 import {useDispatch,useSelector} from "react-redux"
 import type {TypedUseSelectorHook} from "react-redux"
 import { authReducer } from "./auth/authSlice"
+import { menuReducer } from "./menu/menuSlice"
+import { categoryReducer } from "./category/categorySlice"
+import { filmReducer } from "./film/filmSlice"
 
  const store = configureStore({
     reducer:{
-        auth:authReducer
+        auth:authReducer,
+        menu:menuReducer,
+        category:categoryReducer,
+        film:filmReducer
     },
 })
 

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import LoginForm from "../components/login-form/LoginForm";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginThunk } from "../redux/auth/authAction";
 import { LoginParams } from "../redux/auth/authInterface";
@@ -22,13 +22,13 @@ export default function Login() {
   const router = useRouter()
   const dispatch = useAppDispatch();
   const result = useAppSelector((state) => state.auth);
-  const { data, error } = result;
+  const { dataAuth, error } = result;
 
   useEffect(() => {
-    if(data.token) {
+    if(dataAuth.token) {
       router.push('/')
     }
-  },[data])
+  },[dataAuth])
 
   const handleSubmit = (data: LoginParams) => {
     dispatch(loginThunk(data));

@@ -1,5 +1,5 @@
 export const getLocalToken = () => {
-    return window.localStorage.getItem('token');
+    return window.localStorage.getItem('token') || '' || null;
 };
 
 export const setLocalToken = (token:string) => {

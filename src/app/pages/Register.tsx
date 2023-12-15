@@ -22,13 +22,13 @@ export default function Register() {
   const router = useRouter()
   const dispatch = useAppDispatch();
   const result = useAppSelector((state) => state.auth);
-  const { data, error } = result;
+  const { dataAuth, error } = result;
 
   useEffect(() => {
-    if(data.user) {
+    if(dataAuth.user) {
       router.push('/login')
     }
-  },[data])
+  },[dataAuth])
   
   const handleSubmit = (data: RegisterParams) => {
     dispatch(registerThunk(data));
