@@ -5,13 +5,15 @@ import { authReducer } from "./auth/authSlice"
 import { menuReducer } from "./menu/menuSlice"
 import { categoryReducer } from "./category/categorySlice"
 import { filmReducer } from "./film/filmSlice"
+import { showtimeReducer } from "./showtime/showtimeSlice"
 
  const store = configureStore({
     reducer:{
         auth:authReducer,
         menu:menuReducer,
         category:categoryReducer,
-        film:filmReducer
+        film:filmReducer,
+        showtime:showtimeReducer
     },
 })
 

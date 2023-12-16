@@ -1,19 +1,18 @@
-"use client"
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAppSelector } from '../redux/store';
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAppSelector } from "../redux/store";
 
-const useAdminCheck = (pathname:string) => {
-    console.log(pathname)
+const useAdminCheck = (pathname: string) => {
   const router = useRouter();
   const result = useAppSelector((state) => state.auth);
-  const { dataAuth, error } = result;
+  const { dataAuth } = result;
 
   useEffect(() => {
     if (!dataAuth.token || dataAuth.user?.role != 1) {
       router.push("/admin/login");
-    } else if(dataAuth.token || dataAuth.user?.role == 1) {
-        router.push(pathname);
+    } else if (dataAuth.token || dataAuth.user?.role == 1) {
+      router.push(pathname);
     }
   }, [dataAuth]);
 };

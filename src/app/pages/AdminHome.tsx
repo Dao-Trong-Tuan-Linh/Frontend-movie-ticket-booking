@@ -45,8 +45,13 @@ export default function AdminHome() {
     },
     {
       name:'Lịch chiếu',
-      link:'/admin/showtimes',
+      link:'/admin/showtime',
       icon:<RiSlideshow2Line/>
+    },
+    {
+      name:'Tạo lịch chiếu',
+      link:'/admin/create-showtime',
+      icon:<IoMdAdd/>
     }
   ],[])
 

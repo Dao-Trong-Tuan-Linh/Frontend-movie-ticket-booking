@@ -37,6 +37,7 @@ export default memo(function Header() {
   const resultAuth = useAppSelector((state) => state.auth);
   const resultMenus = useAppSelector((state) => state.menu);
   const { dataAuth } = resultAuth;
+  const { user } = dataAuth;
   const { dataMenu } = resultMenus;
   const { allMenu } = dataMenu;
 
@@ -56,7 +57,6 @@ export default memo(function Header() {
         : [],
     [allMenu]
   );
-  
 
   useEffect(() => {
     dispatch(getMenusThunk());
@@ -113,7 +113,10 @@ export default memo(function Header() {
         alignItems={"center"}
         gap={"1rem"}
       >
-        <Link className="logo" href={dataAuth.user?.role == 1 ? '/admin/home' : "/"}>
+        <Link
+          className="logo"
+          href={dataAuth.user?.role == 1 ? "/admin/home" : "/"}
+        >
           M&E
         </Link>
         {dataAuth.user?.role == 1 ? (
