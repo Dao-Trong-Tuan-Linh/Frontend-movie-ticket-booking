@@ -1,5 +1,5 @@
 "use client";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -29,13 +29,16 @@ function createData(
 interface ShowtimeTableProps {
   allShowtime: IShowtime[];
   obj: FilmObjectType;
+  onOpen:(id:string) => void
 }
 export default function ShowtimeTable({
   allShowtime,
   obj,
+  onOpen
 }: ShowtimeTableProps) {
   const dispatch = useDispatch();
   const router = useRouter();
+  
   const data = useMemo(() => allShowtime, [allShowtime]);
 
   const column = useMemo(
@@ -55,7 +58,7 @@ export default function ShowtimeTable({
     ],
     []
   );
-
+  
   const rows = useMemo(
     () =>
       data.map((showtime) =>
@@ -68,7 +71,7 @@ export default function ShowtimeTable({
           `${showtime.money}`
         )
       ),
-    [data]
+    [data,obj]
   );
   return (
     <TableContainer component={Paper}>
@@ -110,7 +113,7 @@ export default function ShowtimeTable({
                 <Button
                   sx={{ marginRight: "10px" }}
                   onClick={() => {
-                    router.push(`/admin/menu/${row.id}`);
+                    router.push(`/admin/showtime/${row.id}`);
                   }}
                   color="warning"
                   variant="contained"
@@ -118,9 +121,9 @@ export default function ShowtimeTable({
                   Sửa
                 </Button>
                 <Button
-                  //   onClick={() => {
-                  //     handleOpenDelete(row.id)
-                  //   }}
+                    onClick={() => {
+                      onOpen(row.id)
+                    }}
                   color="error"
                   variant="contained"
                 >

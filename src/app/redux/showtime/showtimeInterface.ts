@@ -7,10 +7,17 @@ export interface IShowtime{
     money:string
 }
 
+export interface INowShowing{
+    _id:string,
+    name:string,
+    image:string
+}
+
 export interface ShowtimeState{
     loading:boolean,
     dataShowtime:{
-        allShowtime:IShowtime[]
+        allShowtime:IShowtime[],
+        rowNowShowing:INowShowing[]
         detailShowtime:IShowtime
     }
 }

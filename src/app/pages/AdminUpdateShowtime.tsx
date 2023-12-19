@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { styled } from "@mui/system";
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Stack, TextField, Typography,FormControlLabel,Switch } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -13,11 +13,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import dayjs, { Dayjs } from "dayjs";
 import { useAppDispatch, useAppSelector } from "@/app/redux/store";
-import { allFilmsThunk} from "../redux/film/filmAction";
+import { allFilmsThunk } from "../redux/film/filmAction";
 import useAdminCheck from "../hooks/useAdminCheck";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { IFilm } from "../redux/film/filmInterface";
-import { createShowtimeThunk } from "../redux/showtime/showtimeAction";
+import { createShowtimeThunk, singleShowtimeThunk, updateShowtimeThunk } from "../redux/showtime/showtimeAction";
+import { resetShowtimeDetail } from "../redux/showtime/showtimeSlice";
 
 const Container = styled("div")({
   position: "relative",
@@ -29,7 +30,10 @@ const Container = styled("div")({
   backgroundColor: "#fff",
 });
 
-export default function AdminCreateShowtime() {
+interface Props {
+  id: string;
+}
+export default function AdminUpdateShowtime({ id }: Props) {
   const pathname = usePathname();
   useAdminCheck(pathname);
 
@@ -40,6 +44,13 @@ export default function AdminCreateShowtime() {
   const [startTime, setStartTime] = useState("");
   const [money, setMoney] = useState("");
   const [films, setFilms] = useState<IFilm[]>([]);
+  const [available,setAvailable] = useState(false)
+
+  const router = useRouter()
+
+  const resultShowtime = useAppSelector((state) => state.showtime);
+  const { dataShowtime } = resultShowtime;
+  const { detailShowtime } = dataShowtime;
 
   const resultFilms = useAppSelector((state) => state.film);
   const { dataFilm } = resultFilms;
@@ -64,27 +75,28 @@ export default function AdminCreateShowtime() {
   }, [date, time]);
 
   useEffect(() => {
-    dispatch(allFilmsThunk());
+    dispatch(singleShowtimeThunk(id));
+    dispatch(allFilmsThunk())
   }, []);
 
   useEffect(() => {
-    if (allFilms) {
-      setFilms(allFilms);
+    if (detailShowtime) {
+      const arrDate = detailShowtime.date.split("/")
+      setFilm(detailShowtime.filmId)
+      setFilms(allFilms)
+      setDate(dayjs(`${arrDate[2]}-${arrDate[1]}-${arrDate[0]}`))
+      setTime(dayjs(`${arrDate[2]}-${arrDate[1]}-${arrDate[0]}T${detailShowtime.time}`))
+      setAvailable(detailShowtime.available)
+      setMoney(detailShowtime.money)
     }
-  }, [allFilms]);
+  }, [detailShowtime]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("filmId", film);
-    data.append("date", startDate);
-    data.append("time", startTime);
-    data.append("money", money);
-    dispatch(createShowtimeThunk(data));
-    setFilm("")
-    setDate(null)
-    setTime(null)
-    setMoney("")
+    const showtime = {filmId:film,date:startDate,time:startTime,available,money}
+    dispatch(updateShowtimeThunk({id,showtime}));
+    dispatch(resetShowtimeDetail(''))
+    router.push('/admin/showtime')
   };
 
   return (
@@ -113,7 +125,7 @@ export default function AdminCreateShowtime() {
             }}
           >
             <Typography align="center" fontWeight={"600"} variant="h5">
-              Thêm lịch chiếu
+              Sửa lịch chiếu
             </Typography>
           </Box>
           <Box
@@ -138,6 +150,15 @@ export default function AdminCreateShowtime() {
                     </MenuItem>
                   ))}
                 </Select>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={available}
+                      onChange={(e) => setAvailable(e.target.checked)}
+                    />
+                  }
+                  label="Trạng thái"
+                />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]}>
                     <DatePicker
@@ -169,7 +190,7 @@ export default function AdminCreateShowtime() {
                   color="success"
                   variant="contained"
                 >
-                  Thêm mới
+                  Sửa
                 </Button>
               </Stack>
             </form>

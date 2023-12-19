@@ -1,11 +1,9 @@
-"use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Stack } from "@mui/material";
-import { useAppSelector } from "@/app/redux/store";
 
 const style = {
   position: "absolute" as "absolute",
@@ -20,43 +18,17 @@ const style = {
 };
 
 interface DeleteItemProps {
+  id:string,
   open: boolean;
   onClose: () => void;
   onSubmit: (id: string) => void;
 }
 export default function DeleteItem({
+  id,
   open,
   onClose,
   onSubmit,
 }: DeleteItemProps) {
-  const [id, setId] = useState("");
-
-  const resultCategory = useAppSelector((state) => state.category);
-  const { dataCategory } = resultCategory;
-  const { detailCategory } = dataCategory;
-
-  const resultFilm = useAppSelector((state) => state.film)
-  const {dataFilm} = resultFilm
-  const {detailFilm} = dataFilm
-
-  useEffect(() => {
-    if (detailCategory._id) {
-      setId(detailCategory._id);
-    }
-  }, [detailCategory]);
-
-  useEffect(() => {
-    if (detailFilm._id) {
-      setId(detailFilm._id);
-    }
-  }, [detailFilm]);
-
-  useEffect(() => {
-    if(!open) {
-      setId("")
-    }
-  },[open])
-
   return (
     <Modal
       open={open}
@@ -71,7 +43,7 @@ export default function DeleteItem({
           component="h2"
           textAlign={"center"}
         >
-          Xóa {`${detailCategory.name || detailFilm.name}`} ?
+          {`Bạn có muốn xóa ${id} này không ?`}
         </Typography>
 
         <Stack direction={"row"} justifyContent={"center"}>
@@ -80,9 +52,8 @@ export default function DeleteItem({
           </Button>
           <Button
             onClick={() => {
-              if (id) {
-                onSubmit(id);
-              }
+              onSubmit(id)
+              onClose()
             }}
             color="error"
           >

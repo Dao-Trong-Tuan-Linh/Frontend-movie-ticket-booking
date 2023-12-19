@@ -11,8 +11,10 @@ const useAdminCheck = (pathname: string) => {
   useEffect(() => {
     if (!dataAuth.token || dataAuth.user?.role != 1) {
       router.push("/admin/login");
-    } else if (dataAuth.token || dataAuth.user?.role == 1) {
+    } else if (dataAuth.token && dataAuth.user?.role == 1 && pathname.startsWith('/admin')) {
       router.push(pathname);
+    } else if(dataAuth.token && dataAuth.user?.role == 1 && !pathname.startsWith('/admin')) {
+      router.push('/admin/home')
     }
   }, [dataAuth]);
 };

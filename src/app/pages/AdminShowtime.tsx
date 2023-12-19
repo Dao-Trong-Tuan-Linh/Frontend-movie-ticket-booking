@@ -12,8 +12,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAdminCheck from "../hooks/useAdminCheck";
 import { usePathname } from "next/navigation";
-import { allShowtimeThunk } from "../redux/showtime/showtimeAction";
+import { allShowtimeThunk, deleteShowtimeThunk } from "../redux/showtime/showtimeAction";
 import ShowtimeTable from "../components/showtime-table/ShowtimeTable";
+import DeleteItem from "../components/delete-item/DeleteItem";
 
 const Container = styled("div")({
   marginTop: "60px",
@@ -35,7 +36,26 @@ export default function AdminShowtime() {
   useAdminCheck(pathname);
 
   const [obj, setObj] = useState<FilmObjectType>({});
+  const [id,setId] = useState("")
   const dispatch = useAppDispatch();
+
+  const [open,setOpen] = useState(false)
+
+  const handleOpen = async (id:string) => {
+    setOpen(true)
+    setId(id)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleDelete = (id:string) => {
+    dispatch(deleteShowtimeThunk(id))
+    handleClose()
+  }
+
+  console.log(obj)
 
   const resultFilms = useAppSelector((state) => state.film);
   const { dataFilm } = resultFilms;
@@ -78,7 +98,8 @@ export default function AdminShowtime() {
           Danh sách lịch chiếu
         </Typography>
       </Box>
-      <ShowtimeTable allShowtime={allShowtime} obj={obj} />
+      <ShowtimeTable allShowtime={allShowtime} obj={obj} onOpen={handleOpen}/>
+      <DeleteItem open={open} onSubmit={handleDelete} onClose={handleClose} id={id}/>
       <ToastContainer
         position="top-right"
         autoClose={3000}

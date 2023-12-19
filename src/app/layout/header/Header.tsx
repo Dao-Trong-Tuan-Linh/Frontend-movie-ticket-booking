@@ -181,7 +181,11 @@ export default memo(function Header() {
             <Button
               onClick={() => {
                 dispatch(logOut());
-                router.push("/login");
+                if(dataAuth.user?.role == 1) {
+                  router.push("/admin/login");
+                } else {
+                  router.push("/login");
+                }
               }}
               sx={{
                 color: "white",
