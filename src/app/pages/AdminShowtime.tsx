@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 import { allShowtimeThunk, deleteShowtimeThunk } from "../redux/showtime/showtimeAction";
 import ShowtimeTable from "../components/showtime-table/ShowtimeTable";
 import DeleteItem from "../components/delete-item/DeleteItem";
+import { resetShowtimeDetail } from "../redux/showtime/showtimeSlice";
 
 const Container = styled("div")({
   marginTop: "60px",
@@ -55,7 +56,6 @@ export default function AdminShowtime() {
     handleClose()
   }
 
-  console.log(obj)
 
   const resultFilms = useAppSelector((state) => state.film);
   const { dataFilm } = resultFilms;

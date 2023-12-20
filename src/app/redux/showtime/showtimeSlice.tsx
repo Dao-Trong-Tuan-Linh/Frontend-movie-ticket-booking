@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { allShowtimeThunk, createShowtimeThunk, deleteShowtimeThunk, singleShowtimeThunk, updateShowtimeThunk } from "./showtimeAction";
+import { allShowtimeThunk, createShowtimeThunk, deleteShowtimeThunk, getTimesThunk, rowComingSoonThunk, rowNowShowingThunk, singleShowtimeThunk, updateShowtimeThunk } from "./showtimeAction";
 import { toast } from "react-toastify";
 import { IShowtime, ShowtimeState } from "./showtimeInterface";
 
@@ -7,6 +7,9 @@ const initialShowtimeState: ShowtimeState = {
   loading: false,
   dataShowtime: {
     allShowtime: [],
+    nowShowing:[],
+    comingSoon:[],
+    allTimes:[],
     detailShowtime: {
       _id: "",
       filmId: "",
@@ -43,6 +46,48 @@ export const showtimeSlice = createSlice({
     });
     builder.addCase(
       allShowtimeThunk.rejected,
+      (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        toast.error(action.payload);
+      }
+    );
+    builder.addCase(getTimesThunk.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getTimesThunk.fulfilled, (state, action) => {
+      state.loading = false;
+      state.dataShowtime.allTimes = action.payload;
+    });
+    builder.addCase(
+      getTimesThunk.rejected,
+      (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        toast.error(action.payload);
+      }
+    );
+    builder.addCase(rowNowShowingThunk.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(rowNowShowingThunk.fulfilled, (state, action) => {
+      state.loading = false;
+      state.dataShowtime.nowShowing = action.payload;
+    });
+    builder.addCase(
+      rowNowShowingThunk.rejected,
+      (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        toast.error(action.payload);
+      }
+    );
+    builder.addCase(rowComingSoonThunk.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(rowComingSoonThunk.fulfilled, (state, action) => {
+      state.loading = false;
+      state.dataShowtime.comingSoon = action.payload;
+    });
+    builder.addCase(
+      rowComingSoonThunk.rejected,
       (state, action: PayloadAction<any>) => {
         state.loading = false;
         toast.error(action.payload);

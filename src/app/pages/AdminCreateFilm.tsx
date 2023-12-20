@@ -68,7 +68,7 @@ export default function AdminCreateFilm() {
 
   useEffect(() => {
     if (date) {
-      setStartDate(`${date.date() < 10 ? `0${date.date()}` : `${date.date()}`}/${date.month() + 1 < 10 ? `0${date.month() + 1}` : `${date.month() + 1}`}/${date.year()}`);
+      setStartDate(`${date.year()}-${date.month() + 1 < 10 ? `0${date.month() + 1}` : `${date.month() + 1}`}-${date.date() < 10 ? `0${date.date()}` : `${date.date()}`}`);
     }
   }, [date]);
 

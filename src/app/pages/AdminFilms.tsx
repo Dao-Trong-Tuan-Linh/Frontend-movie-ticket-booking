@@ -28,16 +28,16 @@ export default function AdminFilms() {
   const pathname = usePathname()
   useAdminCheck(pathname)
   
+  const [id,setId] = useState("")
   const [open,setOpen] = useState(false)
 
   const handleOpen = async (_id:string) => {
-    await dispatch(getFilmThunk(_id))
+    setId(_id)
     setOpen(true)
   }
 
   const handleClose = () => {
     setOpen(false)
-    dispatch(resetFilmDetail(''))
   }
 
   const handleDelete = (id:string) => {
@@ -123,7 +123,7 @@ export default function AdminFilms() {
         pauseOnHover
         theme="light"
       />
-      <DeleteItem open={open} onSubmit={handleDelete} onClose={handleClose}/>
+      <DeleteItem open={open} onSubmit={handleDelete} onClose={handleClose} id={id}/>
     </Container>
   );
 }

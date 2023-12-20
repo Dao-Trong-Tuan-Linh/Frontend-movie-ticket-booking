@@ -19,6 +19,7 @@ export default function AdminCategories() {
   useAdminCheck(pathname)
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [id,setId] = useState("")
 
   const handleOpenEdit = async (id:string) => {
     await dispatch(getCategoryThunk(id))
@@ -29,8 +30,8 @@ export default function AdminCategories() {
     dispatch(resetDetail(''))
   }
   const handleOpenDelete = async (id:string) => {
-    await dispatch(getCategoryThunk(id))
     setOpenDelete(true);
+    setId(id)
   }
   const handleCloseDelete = () => setOpenDelete(false);
 
@@ -81,7 +82,7 @@ export default function AdminCategories() {
         handleOpenDelete={handleOpenDelete}
       />
       <EditCategories open={openEdit} handleClose={handleCloseEdit} onSubmit={handleUpdate}/>
-      <DeleteItem open={openDelete} onClose={handleCloseDelete} onSubmit={handleDelete}/>
+      <DeleteItem open={openDelete} onClose={handleCloseDelete} onSubmit={handleDelete} id={id}/>
       <ToastContainer
         position="top-right"
         autoClose={3000}

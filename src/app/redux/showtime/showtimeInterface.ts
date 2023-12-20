@@ -13,11 +13,17 @@ export interface INowShowing{
     image:string
 }
 
+export interface ITime{
+    time:string
+}
+
 export interface ShowtimeState{
     loading:boolean,
     dataShowtime:{
         allShowtime:IShowtime[],
-        rowNowShowing:INowShowing[]
+        nowShowing:INowShowing[],
+        comingSoon:INowShowing[],
+        allTimes:ITime[],
         detailShowtime:IShowtime
     }
 }
