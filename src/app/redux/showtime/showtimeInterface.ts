@@ -14,7 +14,8 @@ export interface INowShowing{
 }
 
 export interface ITime{
-    time:string
+    time:string,
+    money:string
 }
 
 export interface ShowtimeState{
