@@ -6,6 +6,7 @@ import { menuReducer } from "./menu/menuSlice"
 import { categoryReducer } from "./category/categorySlice"
 import { filmReducer } from "./film/filmSlice"
 import { showtimeReducer } from "./showtime/showtimeSlice"
+import { orderReducer } from "./order/orderSlice"
 
  const store = configureStore({
     reducer:{
@@ -13,7 +14,8 @@ import { showtimeReducer } from "./showtime/showtimeSlice"
         menu:menuReducer,
         category:categoryReducer,
         film:filmReducer,
-        showtime:showtimeReducer
+        showtime:showtimeReducer,
+        order:orderReducer
     },
 })
 

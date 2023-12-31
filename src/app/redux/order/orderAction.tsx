@@ -13,3 +13,16 @@ export const createOrderThunk = createAsyncThunk(
         }
     }
 )
+
+export const getOrdersByUserThunk = createAsyncThunk(
+    "order/getOrdersByUser",
+    async (_, thunkApi) => {
+      try {
+        const { data } = await baseAxios.get("/get-orders-by-user");
+        const { result } = data;
+        return result;
+      } catch (error: any) {
+        return thunkApi.rejectWithValue(error.response.data.msg);
+      }
+    }
+  );

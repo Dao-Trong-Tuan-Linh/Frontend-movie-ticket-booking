@@ -179,7 +179,7 @@ export default function Booking({ id }: BookingProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await dispatch(createOrderThunk({filmId:id,seats:chosenSeats,total:chosenSeats.length * Number(money)}))
+    await dispatch(createOrderThunk({filmId:id,seats:chosenSeats,date,time,total:chosenSeats.length * Number(money)}))
   }
   
   return (
@@ -197,7 +197,7 @@ export default function Booking({ id }: BookingProps) {
           Đặt vé
         </Typography>
       </Box>
-      <form onClick={handleSubmit}>
+      <form onSubmit={handleSubmit}>
       <Stack gap={"20px"}>
         <Typography sx={{ color: "#fff", fontSize: "20px", fontWeight: "600" }}>
           {data.name}
@@ -251,14 +251,13 @@ export default function Booking({ id }: BookingProps) {
               flexWrap: "wrap",
               gap: "10px",}}>
             {seats.map((seat) => (
-              <Button
+              <Box
                 key={seat.name}
-                variant="contained"
-                color={chosenSeats.some(item => item.name === seat.name) ? "success" : "warning"}
+                sx={{width:'11%',backgroundColor:chosenSeats.some(item => item.name == seat.name) ? "#1b5e20" : "#ed6c02"}}
                 onClick={() => handleSelectSeats(seat.name)}
               >
                 {seat.name}
-              </Button>
+              </Box>
             ))}
             </Box>
             <Stack mt={2} gap={'5px'}>
